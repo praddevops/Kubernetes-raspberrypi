@@ -87,3 +87,25 @@ Finally run the following as normal user, not as root:
 11. To run pods on pods on master in a single node cluster setup, remove the taint:
 
 # kubectl taint nodes --all node-role.kubernetes.io/master-
+
+
+Troubleshooting Guide:
+1) Getting the following error during kubeadm init
+   [ERROR FileAvailable--etc-kubernetes-manifests-kube-apiserver.yaml]: /etc/kubernetes/manifests/kube-apiserver.yaml already exists
+   Fix: First run the kubeadm reset before executing the kubeadm init command
+2) Gettung following errors during kubeadm reset
+   a) port 10251 and 10252 are in use
+      Fix: check the usage status of all ports. It seems like kubeadm failed to reset the controller and scheduler. (https://github.com/kubernetes/kubeadm/issues/339)
+
+       $ netstat -lnp | grep 1025
+       tcp6       0      0 :::10251                :::*                    LISTEN      4366/kube-scheduler
+       tcp6       0      0 :::10252                :::*                    LISTEN      4353/kube-controlle
+       $ kill 4366
+       $ kill 4353
+   b) [ERROR CRI]: container runtime is not running: 
+      Fix: (Source: https://www.reddit.com/r/kubernetes/comments/utiymt/kubeadm_init_running_into_issue_error_cri/)
+       $ sudo rm /etc/containerd/config.toml
+       $ sudo systemctl restart containerd
+       $ sudo kubeadm init
+
+       https://github.com/containerd/containerd/issues/4581
