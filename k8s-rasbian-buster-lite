@@ -86,7 +86,7 @@ Finally run the following as normal user, not as root:
 
 11. To run pods on pods on master in a single node cluster setup, remove the taint:
 
-# kubectl taint nodes --all node-role.kubernetes.io/master-
+# kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-
 
 
 Troubleshooting Guide:
