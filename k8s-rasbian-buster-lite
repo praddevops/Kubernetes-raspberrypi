@@ -51,9 +51,9 @@ Reboot the system
 
 Create the following file: /etc/apt/sources.list.d/kubernetes.list and add the following in the file
 
-# deb http://apt.kubernetes.io/ kubernetes-xenial main
+deb http://apt.kubernetes.io/ kubernetes-xenial main
 
-Executing following as root:
+Execute the following as root:
 
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
