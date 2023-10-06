@@ -57,6 +57,41 @@ Execute the following as root:
 
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
+"""
+You will get a warning that apt-key is deprecated
+
+To resolve the warning "Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8))", you need to move your GPG public keys from the /etc/apt/trusted.gpg file to the /etc/apt/trusted.gpg.d directory.
+
+To do this, follow these steps:
+
+    Open a terminal window.
+    Change to the APT directory:
+
+cd /etc/apt
+
+    Copy the trusted.gpg file to the trusted.gpg.d directory:
+
+sudo cp trusted.gpg trusted.gpg.d
+
+    Remove the trusted.gpg file:
+
+sudo rm trusted.gpg
+
+    Update the APT cache:
+
+sudo apt update
+
+Once you have completed these steps, the warning should disappear when you run apt-key commands.
+
+Note: If you have any GPG public keys in the /etc/apt/keyrings/ directory, you can leave them there. The APT package manager will automatically search that directory for keys when verifying packages.
+
+Why is apt-key deprecated?
+
+The apt-key command is deprecated because it is not as secure as the newer gpg command. The apt-key command does not support all of the latest security features, and it can be used to accidentally trust keys for all repositories on your system.
+
+The gpg command is a more secure and flexible way to manage GPG public keys. The APT package manager now uses the gpg command to verify packages, and it is recommended that you use the gpg command to manage your GPG public keys as well.
+
+"""
 # sudo apt-get update
 
 # sudo apt-get install -y kubelet kubeadm kubectl
