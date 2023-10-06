@@ -101,6 +101,8 @@ On Master Node:
 The following will take about 15 min to complete.
 # sudo kubeadm init --token-ttl=0 --pod-network-cidr=10.244.0.0/16
 
+If you get [ERROR CRI]: container runtime is not running error, see the Troubleshooting guide below.
+
 Above command will produce output similar to the following to be run on worker nodes to join the cluster(this is not required on a single node cluster:
 # kubeadm join <master-ip>:6443 --token <token> \
     --discovery-token-ca-cert-hash sha256:<hash>
