@@ -1,14 +1,15 @@
-1. install minimal rasbian for rasberry pi 4 from any of the mirrors 
+1. install minimal raspbian for rasberry pi 4 from any of the mirrors 
 
-2. Login (rasbian default login username: pi, password: raspberry. Change the password # sudo raspi-config)
+2. Login (raspbian default login username: pi, password: raspberry. Change the password # sudo raspi-config)
 
 3. Connect to WIFI 
-using ncli (https://nullr0ute.com/2016/09/connect-to-a-wireless-network-using-command-line-nmcli/)
+if network manager is not configured on raspbian, enter the command #sudo raspi-config and go to Advanced Options >> Network Config and set the Network Manager as the Network configuration tool
+
+using nmcli (https://nullr0ute.com/2016/09/connect-to-a-wireless-network-using-command-line-nmcli/)
 # nmcli device wifi rescan
 # nmcli device wifi list
 # nmcli device wifi connect <SSID-Name> password <wireless-password>
 
-On rasbian, use # sudo raspi-config
  
 4. Enable SSH
 # sudo systemctl enable ssh
