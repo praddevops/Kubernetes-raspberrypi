@@ -6,7 +6,7 @@
     * Using nmcli (https://nullr0ute.com/2016/09/connect-to-a-wireless-network-using-command-line-nmcli/)
         ```
         nmcli device wifi rescan
-        nmcli device wifi list`
+        nmcli device wifi list
         nmcli device wifi connect <SSID-Name> password <wireless-password>
         ```
 3. Enable SSH
