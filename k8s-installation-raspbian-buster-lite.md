@@ -1,6 +1,6 @@
-## Install minimal Raspbian for Raspberry Pi 4 from any of the mirrors
+## Setting up Kubernetes cluster on Raspberry pi 4
 
-1. Login (Raspbian default login username: pi, password: raspberry. Change the password # sudo raspi-config)
+1. Install minimal Raspbian for Raspberry Pi 4 from any of the mirrors and login
 2. Connect to WIFI
     * If network manager is not configured on Raspbian, enter the command `sudo raspi-config` and go to Advanced Options >> Network Config and select Network Manager as the Network configuration tool
     * Using nmcli (https://nullr0ute.com/2016/09/connect-to-a-wireless-network-using-command-line-nmcli/)
@@ -133,17 +133,32 @@ To run pods on the master node in a single node cluster setup, remove the taint 
 
 ### Troubleshooting:
 
-* If you get the error `[ERROR FileAvailable--etc-kubernetes-manifests-kube-apiserver.yaml]: /etc/kubernetes/manifests/kube-apiserver.yaml already exists`, run the following command before executing the `kubeadm init` command:
+1) Getting the following error during `kubeadm init`
+   `[ERROR FileAvailable--etc-kubernetes-manifests-kube-apiserver.yaml]: /etc/kubernetes/manifests/kube-apiserver.yaml already exists`
+   
+   **Fix:** First run the kubeadm reset before executing the kubeadm init command
 
-`sudo kubeadm reset`
+2) Getting following errors during kubeadm reset
+  
+   a) `port 10251 and 10252 are in use`
+    
+   **Fix:** check the usage status of all ports. It seems like kubeadm failed to reset the controller and scheduler. (https://github.com/kubernetes/kubeadm/issues/339)
+      ```
+       $ netstat -lnp | grep 1025
+       tcp6       0      0 :::10251                :::*                    LISTEN      4366/kube-scheduler
+       tcp6       0      0 :::10252                :::*                    LISTEN      4353/kube-controlle
+       $ kill 4366
+       $ kill 4353
+      ```
+   b) `[ERROR CRI]: container runtime is not running` 
+      
+      **Fix:** (Source: https://www.reddit.com/r/kubernetes/comments/utiymt/kubeadm_init_running_into_issue_error_cri/)
+     
+      https://github.com/containerd/containerd/issues/4581
+              
+       $ sudo rm /etc/containerd/config.toml
+       $ sudo systemctl restart containerd
+       $ sudo kubeadm init
+      
 
-
-* If you get the error `[ERROR CRI]: container runtime is not running`, try the following:
-```
-1. Check the usage status of all ports to make sure that ports 10251 and 10252 are not in use.
-2. Kill any processes that are using ports 10251 and 10252.
-3. Remove the `/etc/containerd/config.toml` file.
-4. Restart the containerd service.
-5. Run the `kubeadm init` command again.
-```
 Once you have completed these steps, your Kubernetes cluster on Raspberry Pi will be up and running!
