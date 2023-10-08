@@ -122,7 +122,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 **On the master node:**
-Install network driver (Flannel). Weave may not work on raspberrypi
+Install network driver (Flannel). Weave may not work on raspberrypi (https://kubernetes.io/docs/concepts/cluster-administration/addons/)
 ```
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
