@@ -1,4 +1,4 @@
-## Setting up Kubernetes cluster on Raspberry pi 4
+## Setting up Kubernetes cluster on Raspberry pi 4 (Failing)
 
 1. Install minimal Raspbian for Raspberry Pi 4 from any of the mirrors and login
 2. Connect to WIFI
