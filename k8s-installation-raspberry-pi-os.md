@@ -22,7 +22,7 @@
             ```
             interface eth0
             static ip_address=x.x.x.y/24
-            static routers=x.x.x.1
+            static routers=x.x.x.1   # usually the first ip address is assigned to the router, but if your raspberry-pi is connected to a repeater network, router wifi address would look different
             static domain_name_servers=8.8.8.8
             
             where, x.x.x.x is same as your device ip and y is the ip you want and reboot the machine
